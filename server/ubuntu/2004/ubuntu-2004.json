@@ -1,0 +1,52 @@
+{
+  "builders": [{
+    "name": "ubuntu-2004",
+    "vm_name": "ubuntu-2004",
+    "type": "vmware-iso",
+    "cpus": 2,
+    "memory": "8196",
+    "disk_size": "18432",
+    "guest_os_type": "ubuntu-64",
+    "tools_upload_flavor": "linux",
+    "version" : 12,
+    "headless": true,
+    "disable_vnc": "false",
+    "vnc_over_websocket": "true",
+    "insecure_connection": "true",
+    "communicator": "none",
+
+    "vmx_data": {
+      "ethernet0.networkName": "VM Network"
+    },
+
+    "iso_url": "https://releases.ubuntu.com/focal/ubuntu-20.04.1-live-server-amd64.iso",
+    "iso_checksum": "sha256:443511f6bf12402c12503733059269a2e10dec602916c0a75263e5d990f6bb93",
+
+
+    "disk_type_id": "thin",
+
+    "cd_files" : [
+      "./cidata/user-data",
+      "./cidata/meta-data"
+    ],
+    "cd_label": "cidata",
+
+    "boot_wait": "2s",
+
+    "boot_command": [
+      "<enter><enter><f6><esc><wait> ",
+      "<f6><esc>",
+      "autoinstall ",
+      "<enter><wait30m>",
+      "<enter>"
+    ],
+
+    "remote_type": "esx5",
+    "remote_host": "{{user `esxi_host`}}",
+    "remote_datastore": "{{user `esxi_datastore`}}",
+    "remote_username": "{{user `esxi_username`}}",
+    "remote_password": "{{user `esxi_password`}}",
+    "keep_registered": true
+
+  }]
+}
